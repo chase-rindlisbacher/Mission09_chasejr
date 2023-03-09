@@ -32,6 +32,11 @@ namespace Mission09_chasejr
                options.UseSqlite(Configuration["ConnectionStrings:BookDBConnection"]);
            });
             services.AddScoped<IBookstoreRepository, EFBookstoreRepository>();
+
+            services.AddRazorPages();
+
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,17 +48,29 @@ namespace Mission09_chasejr
             }
             // Connects to the wwwroot folder
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
                 // Endpoints are executed in order
                 endpoints.MapControllerRoute(
-                    name: "Paging",
-                    pattern: "{pageNum}",
-                    defaults: new { Controller = "Home", action = "Index" });
+                    "categorypage",
+                    "{category}/{pageNum}",
+                    new {Controller = "Home", Action = "Index"});
+
+                endpoints.MapControllerRoute(
+                   name: "Paging",
+                   pattern: "{pageNum}",
+                   defaults: new { Controller = "Home", action = "Index", pageNum=1 });
+
+                endpoints.MapControllerRoute("category",
+                    "{category}",
+                    new { Controller = "Home", Action = "Index", pageNum = 1 });
+
                 endpoints.MapDefaultControllerRoute();
+
+                endpoints.MapRazorPages();
             });
         }
     }
