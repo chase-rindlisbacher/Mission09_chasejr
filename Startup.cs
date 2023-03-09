@@ -48,6 +48,11 @@ namespace Mission09_chasejr
 
             app.UseEndpoints(endpoints =>
             {
+                // Endpoints are executed in order
+                endpoints.MapControllerRoute(
+                    name: "Paging",
+                    pattern: "{pageNum}",
+                    defaults: new { Controller = "Home", action = "Index" });
                 endpoints.MapDefaultControllerRoute();
             });
         }
