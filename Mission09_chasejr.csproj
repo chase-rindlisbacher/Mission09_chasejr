@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\lib\font-awesome\" />
   </ItemGroup>
 
 </Project>
